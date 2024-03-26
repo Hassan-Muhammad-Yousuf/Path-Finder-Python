@@ -109,6 +109,20 @@ def algorithm(draw, grid, start, end):
             if event.type == pygame.QUIT:
                  pygame.quit()
 
+        current = open_set.get()[2]
+        open_set_hash.remove(current)
+
+        if current == end:
+            return True
+        
+        for neighbor in current.neighbors:
+            temp_g_score = g_score[current] + 1
+
+            if temp_g_score < g_score[neighbor]:
+               came_from[neighbor] = current
+               g_score[current] = temp_g_score
+               f_score[current] = temp_g_score + h(neighbor.get_pos(), end.get_pos())
+
 def make_grid(rows, width):
     grid = []
     gap = width // rows
